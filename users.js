@@ -1,5 +1,4 @@
-
-// Dados mockados para exemplo
+// Dados mockados de usuários
 let users = [
     { id: 1, name: 'João Silva', email: 'joao@exemplo.com', type: 'admin', status: 'active' },
     { id: 2, name: 'Maria Oliveira', email: 'maria@exemplo.com', type: 'customer', status: 'active' },
@@ -13,53 +12,27 @@ let users = [
     { id: 10, name: 'Juliana Martins', email: 'juliana@exemplo.com', type: 'customer', status: 'active' }
 ];
 
-// Elementos DOM
-const sidebar = document.getElementById('sidebar');
-const toggleSidebarBtn = document.getElementById('toggleSidebar');
-const menuItems = document.querySelectorAll('.menu-item');
-const sections = document.querySelectorAll('.section');
-const pageTitle = document.getElementById('pageTitle');
+// Constantes de paginação
+const USERS_PER_PAGE = 5;
+let currentUserPage = 1;
+let filteredUsers = [...users];
 
-
-// Modais
-const userModal = document.getElementById('userModal');
-const deleteConfirmModal = document.getElementById('deleteConfirmModal');
-const closeModalButtons = document.querySelectorAll('.close-modal');
-
-// Botões
+// Elementos DOM para usuários
 const addUserBtn = document.getElementById('addUserBtn');
 const saveUserBtn = document.getElementById('saveUserBtn');
-const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-
-// Pesquisa
+const userModal = document.getElementById('userModal');
+const userForm = document.getElementById('userForm');
+const usersTable = document.getElementById('usersTable');
+const usersPagination = document.getElementById('usersPagination');
 const searchUser = document.getElementById('searchUser');
 
-// Formulários
-const userForm = document.getElementById('userForm');
-
-// Tabelas
-const usersTable = document.getElementById('usersTable');
-
-// Paginação
-const usersPagination = document.getElementById('usersPagination');
-
-
-// Botões para abrir modais
+// Botões para abrir modal de usuário
 addUserBtn.addEventListener('click', () => {
     document.getElementById('userModalTitle').textContent = 'Adicionar Usuário';
     document.getElementById('userId').value = '';
     resetForm('userForm');
     openModal('userModal');
 });
-
-// Fechar modais
-closeModalButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const modalId = button.getAttribute('data-modal');
-        closeModal(modalId);
-    });
-});
-
 
 // Salvar usuário
 saveUserBtn.addEventListener('click', () => {
@@ -114,9 +87,9 @@ function renderUsers() {
     );
     
     // Calcular paginação
-    const totalPages = Math.ceil(filteredUsers.length / ITEMS_PER_PAGE);
-    const start = (currentUserPage - 1) * ITEMS_PER_PAGE;
-    const end = start + ITEMS_PER_PAGE;
+    const totalPages = Math.ceil(filteredUsers.length / USERS_PER_PAGE);
+    const start = (currentUserPage - 1) * USERS_PER_PAGE;
+    const end = start + USERS_PER_PAGE;
     const paginatedUsers = filteredUsers.slice(start, end);
     
     // Renderizar tabela
@@ -154,17 +127,6 @@ function renderUsers() {
     renderPagination(usersPagination, totalPages, currentUserPage, 'user');
 }
 
-
-// Função para traduzir tipo de usuário
-function translateUserType(type) {
-    const types = {
-        'admin': 'Administrador',
-        'manager': 'Gerente',
-        'customer': 'Cliente'
-    };
-    return types[type] || type;
-}
-
 // Função para editar usuário
 function editUser(id) {
     const user = users.find(user => user.id === id);
@@ -180,19 +142,18 @@ function editUser(id) {
     }
 }
 
-// Confirmar exclusão
-confirmDeleteBtn.addEventListener('click', () => {
-    const id = parseInt(document.getElementById('deleteItemId').value);
-    const type = document.getElementById('deleteItemType').value;
-    
-    if (type === 'user') {
-        users = users.filter(user => user.id !== id);
-        renderUsers();
-        showToast('Usuário excluído com sucesso');
-    } 
-    
-    closeModal('deleteConfirmModal');
-});
+// Função para excluir usuário
+function deleteUser(id) {
+    users = users.filter(user => user.id !== id);
+    renderUsers();
+    showToast('Usuário excluído com sucesso');
+}
+
+// Função para mudar página de usuários
+function changeUserPage(page) {
+    currentUserPage = page;
+    renderUsers();
+}
 
 // Pesquisa de usuários
 searchUser.addEventListener('input', () => {
@@ -201,12 +162,18 @@ searchUser.addEventListener('input', () => {
 });
 
 // Expor funções para o escopo global
+window.renderUsers = renderUsers;
 window.editUser = editUser;
-window.deleteItem = deleteItem;
+window.deleteUser = deleteUser;
+window.changeUserPage = changeUserPage;
+
+// Função para mudar página (genérica)
+function changePage(page, type) {
+    if (type === 'user') {
+        changeUserPage(page);
+    } else if (type === 'product') {
+        changeProductPage(page);
+    }
+}
+
 window.changePage = changePage;
-
-// Inicialização
-document.addEventListener('DOMContentLoaded', () => {
-    renderUsers();
-
-});

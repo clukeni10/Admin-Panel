@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -106,6 +105,12 @@ body {
     display: none;
 }
 
+/* Links no sidebar */
+.menu-item a {
+    color: white;
+    text-decoration: none;
+}
+
 /* Conteúdo principal */
 .main-content {
     flex: 1;
@@ -210,7 +215,7 @@ body {
     color: #7f8c8d;
 }
 
-/* Tabelas */
+/* Tabelas comuns */
 .table-container {
     background-color: white;
     border-radius: 8px;
@@ -451,12 +456,6 @@ tbody tr:hover {
     }
 }
 
-/* Ícones */
-.material-icons {
-    font-size: 20px;
-    line-height: 1;
-}
-
 /* Animações */
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -554,25 +553,6 @@ tbody tr:hover {
     background-color: var(--primary);
     color: white;
     border-color: var(--primary);
-}
-
-/* Estilo para input de imagem */
-.image-preview {
-    width: 100%;
-    height: 150px;
-    border: 1px dashed #ddd;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    overflow: hidden;
-}
-
-.image-preview img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
 }
 
 /* Toast notifications */

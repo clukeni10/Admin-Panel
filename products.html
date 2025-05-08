@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo - Produtos</title>
+    <link rel="stylesheet" href="products.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3>Admin Panel</h3>
+          <button class="toggle-btn" id="toggleSidebar">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <div class="sidebar-menu">
+          <div class="menu-item" data-section="dashboard">
+            <i class="fas fa-th-large"></i>
+            <span class="menu-text"><a href="index.html">Dashboard</a></span>
+          </div>
+          <div class="menu-item">
+            <i class="fas fa-users"></i>
+            <span class="menu-text"><a href="users.html">Usuários</a></span>
+          </div>
+          <div class="menu-item active">
+            <i class="fas fa-boxes"></i>
+            <span class="menu-text">Produtos</span>
+          </div>
+          <div class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span class="menu-text">Configurações</span>
+          </div>
+          <div class="menu-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="menu-text">Sair</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Conteúdo principal -->
+      <div class="main-content">
+        <div class="header">
+          <h2 id="pageTitle">Produtos</h2>
+          <div class="user-info">
+            <span>Admin</span>
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+
+        <div class="content">
+          <!-- Produtos -->
+          <section id="products" class="section active">
+            <div class="table-container">
+              <div class="table-header">
+                <div class="table-title">Gerenciar Produtos</div>
+                <button class="btn btn-primary" id="addProductBtn">
+                  <i class="fas fa-plus-square"></i> Novo Produto
+                </button>
+              </div>
+
+              <div class="search-form">
+                <input
+                  type="text"
+                  id="searchProduct"
+                  placeholder="Buscar produtos..."
+                />
+                <button><i class="fas fa-search"></i></button>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTable">
+                  <!-- Dados carregados via JavaScript -->
+                </tbody>
+              </table>
+
+              <div class="pagination" id="productsPagination">
+                <!-- Paginação carregada via JavaScript -->
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para adicionar/editar produto -->
+    <div class="modal-overlay" id="productModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title" id="productModalTitle">Adicionar Produto</h3>
+          <button class="close-modal" data-modal="productModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="productForm">
+            <input type="hidden" id="productId" />
+            <div class="form-group">
+              <label for="productName">Nome</label>
+              <input
+                type="text"
+                id="productName"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="productCategory">Categoria</label>
+              <select id="productCategory" class="form-control" required>
+                <option value="electronics">Eletrônicos</option>
+                <option value="computers">Informática</option>
+                <option value="furniture">Móveis</option>
+                <option value="clothing">Vestuário</option>
+                <option value="books">Livros</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="productPrice">Preço (R$)</label>
+              <input
+                type="number"
+                id="productPrice"
+                class="form-control"
+                step="0.01"
+                min="0"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="productStock">Estoque</label>
+              <input
+                type="number"
+                id="productStock"
+                class="form-control"
+                min="0"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="productDescription">Descrição</label>
+              <textarea
+                id="productDescription"
+                class="form-control"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label>Imagem do Produto</label>
+              <div class="image-preview" id="productImagePreview">
+                <i class="fas fa-image"></i>
+              </div>
+              <input
+                type="file"
+                id="productImage"
+                class="form-control"
+                accept="image/*"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger close-modal" data-modal="productModal">
+            Cancelar
+          </button>
+          <button class="btn btn-primary" id="saveProductBtn">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para confirmar exclusão -->
+    <div class="modal-overlay delete-confirm-modal" id="deleteConfirmModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Confirmar Exclusão</h3>
+          <button class="close-modal" data-modal="deleteConfirmModal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <i class="fas fa-exclamation-triangle"></i>
+          <p>
+            Tem certeza que deseja excluir este item? Esta ação não pode ser
+            desfeita.
+          </p>
+          <input type="hidden" id="deleteItemId" />
+          <input type="hidden" id="deleteItemType" />
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary close-modal"
+            data-modal="deleteConfirmModal"
+          >
+            Cancelar
+          </button>
+          <button class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container para toast notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+    <script src="products.js"></script>
+  </body>
+</html>

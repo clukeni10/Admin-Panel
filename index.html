@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-ao">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Painel Administrativo</title>
+    <title>Painel Administrativo - Dashboard</title>
     <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
@@ -25,13 +25,13 @@
             <i class="fas fa-th-large"></i>
             <span class="menu-text">Dashboard</span>
           </div>
-          <div class="menu-item" data-section="users">
+          <div class="menu-item">
             <i class="fas fa-users"></i>
-            <span class="menu-text">Usuários</span>
+            <span class="menu-text"><a href="users.html">Usuários</a></span>
           </div>
-          <div class="menu-item" data-section="products">
+          <div class="menu-item">
             <i class="fas fa-boxes"></i>
-            <span class="menu-text">Produtos</span>
+            <span class="menu-text"><a href="products.html">Produtos</a></span>
           </div>
           <div class="menu-item">
             <i class="fas fa-cog"></i>
@@ -189,255 +189,6 @@
               </table>
             </div>
           </section>
-
-          <!-- Usuários -->
-          <section id="users" class="section">
-            <div class="table-container">
-              <div class="table-header">
-                <div class="table-title">Gerenciar Usuários</div>
-                <button class="btn btn-primary" id="addUserBtn">
-                  <i class="fas fa-user-plus"></i> Novo Usuário
-                </button>
-              </div>
-
-              <div class="search-form">
-                <input
-                  type="text"
-                  id="searchUser"
-                  placeholder="Buscar usuários..."
-                />
-                <button><i class="fas fa-search"></i></button>
-              </div>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Tipo</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="usersTable">
-                  <!-- Dados carregados via JavaScript -->
-                </tbody>
-              </table>
-
-              <div class="pagination" id="usersPagination">
-                <!-- Paginação carregada via JavaScript -->
-              </div>
-            </div>
-          </section>
-
-          <!-- Produtos -->
-          <section id="products" class="section">
-            <div class="table-container">
-              <div class="table-header">
-                <div class="table-title">Gerenciar Produtos</div>
-                <button class="btn btn-primary" id="addProductBtn">
-                  <i class="fas fa-plus-square"></i> Novo Produto
-                </button>
-              </div>
-
-              <div class="search-form">
-                <input
-                  type="text"
-                  id="searchProduct"
-                  placeholder="Buscar produtos..."
-                />
-                <button><i class="fas fa-search"></i></button>
-              </div>
-
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Categoria</th>
-                    <th>Preço</th>
-                    <th>Estoque</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="productsTable">
-                  <!-- Dados carregados via JavaScript -->
-                </tbody>
-              </table>
-
-              <div class="pagination" id="productsPagination">
-                <!-- Paginação carregada via JavaScript -->
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para adicionar/editar usuário -->
-    <div class="modal-overlay" id="userModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h3 class="modal-title" id="userModalTitle">Adicionar Usuário</h3>
-          <button class="close-modal" data-modal="userModal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="userForm">
-            <input type="hidden" id="userId" />
-            <div class="form-group">
-              <label for="userName">Nome</label>
-              <input type="text" id="userName" class="form-control" required />
-            </div>
-            <div class="form-group">
-              <label for="userEmail">Email</label>
-              <input
-                type="email"
-                id="userEmail"
-                class="form-control"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="userPassword">Senha</label>
-              <input type="password" id="userPassword" class="form-control" />
-              <small
-                >(Deixe em branco para manter a senha atual ao editar)</small
-              >
-            </div>
-            <div class="form-group">
-              <label for="userType">Tipo</label>
-              <select id="userType" class="form-control" required>
-                <option value="admin">Administrador</option>
-                <option value="manager">Gerente</option>
-                <option value="customer">Cliente</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="userStatus">Status</label>
-              <select id="userStatus" class="form-control" required>
-                <option value="active">Ativo</option>
-                <option value="inactive">Inativo</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger close-modal" data-modal="userModal">
-            Cancelar
-          </button>
-          <button class="btn btn-primary" id="saveUserBtn">Salvar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para adicionar/editar produto -->
-    <div class="modal-overlay" id="productModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h3 class="modal-title" id="productModalTitle">Adicionar Produto</h3>
-          <button class="close-modal" data-modal="productModal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form id="productForm">
-            <input type="hidden" id="productId" />
-            <div class="form-group">
-              <label for="productName">Nome</label>
-              <input
-                type="text"
-                id="productName"
-                class="form-control"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="productCategory">Categoria</label>
-              <select id="productCategory" class="form-control" required>
-                <option value="electronics">Eletrônicos</option>
-                <option value="computers">Informática</option>
-                <option value="furniture">Móveis</option>
-                <option value="clothing">Vestuário</option>
-                <option value="books">Livros</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="productPrice">Preço (R$)</label>
-              <input
-                type="number"
-                id="productPrice"
-                class="form-control"
-                step="0.01"
-                min="0"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="productStock">Estoque</label>
-              <input
-                type="number"
-                id="productStock"
-                class="form-control"
-                min="0"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="productDescription">Descrição</label>
-              <textarea
-                id="productDescription"
-                class="form-control"
-                rows="3"
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <label>Imagem do Produto</label>
-              <div class="image-preview" id="productImagePreview">
-                <i class="material-icons">image</i>
-              </div>
-              <input
-                type="file"
-                id="productImage"
-                class="form-control"
-                accept="image/*"
-              />
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-danger close-modal" data-modal="productModal">
-            Cancelar
-          </button>
-          <button class="btn btn-primary" id="saveProductBtn">Salvar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal para confirmar exclusão -->
-    <div class="modal-overlay delete-confirm-modal" id="deleteConfirmModal">
-      <div class="modal">
-        <div class="modal-header">
-          <h3 class="modal-title">Confirmar Exclusão</h3>
-          <button class="close-modal" data-modal="deleteConfirmModal">
-            &times;
-          </button>
-        </div>
-        <div class="modal-body">
-          <i class="material-icons warning-icon">warning</i>
-          <p>
-            Tem certeza que deseja excluir este item? Esta ação não pode ser
-            desfeita.
-          </p>
-          <input type="hidden" id="deleteItemId" />
-          <input type="hidden" id="deleteItemType" />
-        </div>
-        <div class="modal-footer">
-          <button
-            class="btn btn-secondary close-modal"
-            data-modal="deleteConfirmModal"
-          >
-            Cancelar
-          </button>
-          <button class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
         </div>
       </div>
     </div>

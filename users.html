@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-ao">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Painel Administrativo</title>
-    <link rel="stylesheet" href="users.css" />
+    <title>Painel Administrativo - Usuários</title>
+    <link rel="stylesheet" href="users.css">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
@@ -21,21 +21,17 @@
           </button>
         </div>
         <div class="sidebar-menu">
-          <div class="menu-item active" data-section="dashboard">
-            <a href="index.html">
+          <div class="menu-item" data-section="dashboard">
             <i class="fas fa-th-large"></i>
-            <span class="menu-text">Dashboard</span>
-        </a>
+            <span class="menu-text"><a href="index.html">Dashboard</a></span>
           </div>
-          <div class="menu-item" data-section="users">
-            <a href="users.html">
+          <div class="menu-item active">
             <i class="fas fa-users"></i>
             <span class="menu-text">Usuários</span>
-        </a>
           </div>
-          <div class="menu-item" data-section="products">
+          <div class="menu-item">
             <i class="fas fa-boxes"></i>
-            <span class="menu-text">Produtos</span>
+            <span class="menu-text"><a href="products.html">Produtos</a></span>
           </div>
           <div class="menu-item">
             <i class="fas fa-cog"></i>
@@ -48,5 +44,151 @@
         </div>
       </div>
 
-    </body>
-    </html>
+      <!-- Conteúdo principal -->
+      <div class="main-content">
+        <div class="header">
+          <h2 id="pageTitle">Usuários</h2>
+          <div class="user-info">
+            <span>Admin</span>
+            <i class="fas fa-user-circle"></i>
+          </div>
+        </div>
+
+        <div class="content">
+          <!-- Usuários -->
+          <section id="users" class="section active">
+            <div class="table-container">
+              <div class="table-header">
+                <div class="table-title">Gerenciar Usuários</div>
+                <button class="btn btn-primary" id="addUserBtn">
+                  <i class="fas fa-user-plus"></i> Novo Usuário
+                </button>
+              </div>
+
+              <div class="search-form">
+                <input
+                  type="text"
+                  id="searchUser"
+                  placeholder="Buscar usuários..."
+                />
+                <button><i class="fas fa-search"></i></button>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Tipo</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="usersTable">
+                  <!-- Dados carregados via JavaScript -->
+                </tbody>
+              </table>
+
+              <div class="pagination" id="usersPagination">
+                <!-- Paginação carregada via JavaScript -->
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para adicionar/editar usuário -->
+    <div class="modal-overlay" id="userModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title" id="userModalTitle">Adicionar Usuário</h3>
+          <button class="close-modal" data-modal="userModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="userForm">
+            <input type="hidden" id="userId" />
+            <div class="form-group">
+              <label for="userName">Nome</label>
+              <input type="text" id="userName" class="form-control" required />
+            </div>
+            <div class="form-group">
+              <label for="userEmail">Email</label>
+              <input
+                type="email"
+                id="userEmail"
+                class="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="userPassword">Senha</label>
+              <input type="password" id="userPassword" class="form-control" />
+              <small
+                >(Deixe em branco para manter a senha atual ao editar)</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="userType">Tipo</label>
+              <select id="userType" class="form-control" required>
+                <option value="admin">Administrador</option>
+                <option value="manager">Gerente</option>
+                <option value="customer">Cliente</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="userStatus">Status</label>
+              <select id="userStatus" class="form-control" required>
+                <option value="active">Ativo</option>
+                <option value="inactive">Inativo</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger close-modal" data-modal="userModal">
+            Cancelar
+          </button>
+          <button class="btn btn-primary" id="saveUserBtn">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para confirmar exclusão -->
+    <div class="modal-overlay delete-confirm-modal" id="deleteConfirmModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">Confirmar Exclusão</h3>
+          <button class="close-modal" data-modal="deleteConfirmModal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <i class="fas fa-exclamation-triangle"></i>
+          <p>
+            Tem certeza que deseja excluir este item? Esta ação não pode ser
+            desfeita.
+          </p>
+          <input type="hidden" id="deleteItemId" />
+          <input type="hidden" id="deleteItemType" />
+        </div>
+        <div class="modal-footer">
+          <button
+            class="btn btn-secondary close-modal"
+            data-modal="deleteConfirmModal"
+          >
+            Cancelar
+          </button>
+          <button class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Container para toast notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="script.js"></script>
+    <script src="users.js"></script>
+  </body>
+</html>
