@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel Administrativo</title>
+    <link rel="stylesheet" href="users.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h3>Admin Panel</h3>
+          <button class="toggle-btn" id="toggleSidebar">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <div class="sidebar-menu">
+          <div class="menu-item active" data-section="dashboard">
+            <a href="index.html">
+            <i class="fas fa-th-large"></i>
+            <span class="menu-text">Dashboard</span>
+        </a>
+          </div>
+          <div class="menu-item" data-section="users">
+            <a href="users.html">
+            <i class="fas fa-users"></i>
+            <span class="menu-text">Usuários</span>
+        </a>
+          </div>
+          <div class="menu-item" data-section="products">
+            <i class="fas fa-boxes"></i>
+            <span class="menu-text">Produtos</span>
+          </div>
+          <div class="menu-item">
+            <i class="fas fa-cog"></i>
+            <span class="menu-text">Configurações</span>
+          </div>
+          <div class="menu-item">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="menu-text">Sair</span>
+          </div>
+        </div>
+      </div>
+
+    </body>
+    </html>
